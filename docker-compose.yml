@@ -1,6 +1,16 @@
 version: '3.9'
 
 services:
+  certbot:
+    image: certbot/certbot
+    depends_on:
+      - nginx
+          
+    volumes:
+      - /var/certbot/www/:/var/www/certbot/
+      - /var/certbot/conf/:/etc/nginx/ssl/
+    command: certonly --webroot -w /var/www/certbot/ -d site.nextzen.tech --dry-run
+
   nginx:
     image: nginx:latest
     container_name: nginx
@@ -8,13 +18,14 @@ services:
       - "80:80"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
+      - /var/certbot/www/:/var/www/certbot/
+      - /var/certbot/conf/:/etc/nginx/ssl/
     depends_on:
       application:
           condition: service_healthy
 
     networks:
       - application-network
-
 
   application:
     build:
