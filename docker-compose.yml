@@ -45,9 +45,8 @@ services:
       POSTGRES_DB: db
     networks:
       - application-network
-
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d db"]
       interval: 5s
       timeout: 10s
       retries: 5

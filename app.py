@@ -2,8 +2,10 @@ from flask import Flask,render_template
 import controller
 import model
 from flask_cors import CORS
+from flask_migrate import Migrate
 import os
 
+migrate = Migrate()
 
 def create_app():
     CONFIG_ENVIROMENT = os.environ.get("CONFIG_ENVIROMENT")
@@ -15,10 +17,8 @@ def create_app():
     app.config.from_object(CONFIG_ENVIROMENT)
 
     model.init_model(app)
+    migrate.init_app(app)  
     controller.init_bp(app)
-
-
-    
     
     return app
 
