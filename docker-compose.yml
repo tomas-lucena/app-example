@@ -1,0 +1,58 @@
+version: '3.9'
+
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      application:
+          condition: service_healthy
+
+    networks:
+      - application-network
+
+
+  application:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: application
+    depends_on:
+      database-postgres:
+          condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+    expose:
+      - "8000"
+    networks:
+      - application-network
+
+
+  database-postgres:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: db
+    networks:
+      - application-network
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+      
+          
+networks:
+  application-network:
+    driver: bridge
