@@ -9,7 +9,7 @@ services:
     volumes:
       - /var/certbot/www/:/var/www/certbot/
       - /var/certbot/conf/:/etc/nginx/ssl/
-    command: certonly --non-interactive --agree-tos --domains example.com --email webmaster@example.com --webroot -w /var/www/certbot/ -d site.nextzen.tech --dry-run
+    command: certonly --non-interactive --agree-tos --d site.nextzen.tech --email tomas.lucen2@gmail.com --webroot -w /var/www/certbot/  --dry-run
 
   nginx:
     image: nginx:latest
