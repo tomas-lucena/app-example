@@ -13,6 +13,6 @@ class Development(Default):
     DEBUG = True
 
 class Production(Default):
-    SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:postgres@database-postgres.nextzen.tech:5432/db'
+    SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:postgres@database-postgres.nextzen.tech:5432/postgres'
     HOST = '0.0.0.0'
     DEBUG = False
