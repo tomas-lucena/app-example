@@ -9,8 +9,9 @@ def init_model(app):
     with app.app_context():
         from .application import Application
         
-        try:           
-            db.create_all()
-        except:
-            pass
+        db.create_all()
+        # try:           
+        #     db.create_all()
+        # except:
+        #     pass
 
