@@ -8,13 +8,12 @@ import os
 migrate = Migrate()
 
 def create_app():
-    CONFIG_ENVIROMENT = os.environ.get("CONFIG_ENVIROMENT")
+    CONFIG_ENVIRONMENT = os.environ.get("CONFIG_ENVIRONMENT")
 
     app = Flask(__name__)
     CORS(app)  
 
-    print("CONFIG_ENVIROMENT ",CONFIG_ENVIROMENT)
-    app.config.from_object(CONFIG_ENVIROMENT)
+    app.config.from_object(CONFIG_ENVIRONMENT)
 
     model.init_model(app)
     migrate.init_app(app)  
