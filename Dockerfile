@@ -1,8 +1,8 @@
 FROM python:3.11.9
 
-ENV CONFIG_ENVIRONMENT=config.Development
+ENV CONFIG_ENV=config.Development
 
-RUN echo "CONFIG_ENVIRONMENT=${CONFIG_ENVIRONMENT}"
+RUN echo "CONFIG_ENV=${CONFIG_ENV}"
 
 WORKDIR /app
 COPY . /app
